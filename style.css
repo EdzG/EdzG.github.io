@@ -464,6 +464,114 @@ footer#contact {
   opacity: 0.7;
 }
 
+/* ─── Timeline (Experience) ──────────────────────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 12px;
+  bottom: 12px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--accent) 0%, var(--border) 100%);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.timeline-item:last-child { margin-bottom: 0; }
+
+.timeline-dot {
+  position: absolute;
+  left: -2rem;
+  top: 1.55rem;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 2px rgba(124, 106, 247, 0.35);
+  z-index: 1;
+}
+
+.timeline-content { width: 100%; }
+
+.card-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 0.25rem;
+}
+
+.card-list li {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.card-list li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.inline-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(124, 106, 247, 0.4);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--t);
+}
+.inline-link:hover { text-decoration-color: var(--accent); }
+
+/* ─── Education ──────────────────────────────────────────────── */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.edu-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.edu-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--accent-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.edu-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--accent);
+}
+
+.edu-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.45;
+  margin-bottom: 0.25rem;
+}
+
 /* ─── Scroll-reveal animation ────────────────────────────────── */
 .reveal {
   opacity: 0;
@@ -501,6 +609,9 @@ footer#contact {
 
   .research-grid  { grid-template-columns: 1fr; }
   .projects-grid  { grid-template-columns: 1fr; }
+  .edu-grid       { grid-template-columns: 1fr; }
+  .timeline       { padding-left: 1.5rem; }
+  .timeline-dot   { left: -1.5rem; }
 }
 
 @media (max-width: 480px) {
