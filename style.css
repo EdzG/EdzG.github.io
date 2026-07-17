@@ -164,30 +164,6 @@ strong { color: var(--text); font-weight: 600; }
   align-items: center;
 }
 
-/* dot-grid overlay for ML grid aesthetic */
-#about::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle, rgba(124, 106, 247, 0.07) 1px, transparent 1px);
-  background-size: 36px 36px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* gradient vignette so text stays readable */
-#about::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 70% 80% at 25% 50%,
-    rgba(15,17,23,0) 0%,
-    rgba(15,17,23,0.6) 70%,
-    rgba(15,17,23,0.95) 100%);
-  pointer-events: none;
-  z-index: 0;
-}
 
 #hero-canvas {
   position: fixed;

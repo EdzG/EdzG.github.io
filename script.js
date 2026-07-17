@@ -72,14 +72,17 @@ revealEls.forEach(el => revealObserver.observe(el));
 
   const ctx = canvas.getContext('2d');
 
-  const ACCENT     = '124, 106, 247';   // RGB of --accent
-  const COUNT      = 75;
-  const MAX_DIST   = 170;
-  const SPEED      = 0.3;
-  const NODE_R_MIN = 1.2;
-  const NODE_R_MAX = 2.8;
+  const ACCENT        = '124, 106, 247';   // RGB of --accent
+  const COUNT         = 75;
+  const MAX_DIST      = 170;
+  const SPEED         = 0.3;
+  const NODE_R_MIN    = 1.2;
+  const NODE_R_MAX    = 2.8;
+  const MAX_SIGNALS   = 8;
+  const SIGNAL_SPEED  = 0.016;   // fraction of edge traversed per frame
 
   let particles = [];
+  let signals   = [];
   let raf;
 
   function resize() {
@@ -95,6 +98,7 @@ revealEls.forEach(el => revealObserver.observe(el));
       vy: (Math.random() - 0.5) * SPEED,
       r:  NODE_R_MIN + Math.random() * (NODE_R_MAX - NODE_R_MIN),
     }));
+    signals = [];
   }
 
   function draw() {
@@ -131,6 +135,47 @@ revealEls.forEach(el => revealObserver.observe(el));
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${ACCENT}, 0.75)`;
+      ctx.fill();
+    }
+
+    // spawn a new signal pulse on a random connected pair
+    if (signals.length < MAX_SIGNALS && Math.random() < 0.12) {
+      const i = Math.floor(Math.random() * COUNT);
+      const j = Math.floor(Math.random() * COUNT);
+      if (i !== j) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        if (dx * dx + dy * dy < MAX_DIST * MAX_DIST) {
+          signals.push({ from: i, to: j, t: 0 });
+        }
+      }
+    }
+
+    // update + draw signal pulses
+    for (let k = signals.length - 1; k >= 0; k--) {
+      const sig = signals[k];
+      sig.t += SIGNAL_SPEED;
+      if (sig.t >= 1) { signals.splice(k, 1); continue; }
+
+      const p0 = particles[sig.from];
+      const p1 = particles[sig.to];
+      const x  = p0.x + (p1.x - p0.x) * sig.t;
+      const y  = p0.y + (p1.y - p0.y) * sig.t;
+
+      // outer glow
+      const grd = ctx.createRadialGradient(x, y, 0, x, y, 9);
+      grd.addColorStop(0,    'rgba(230, 220, 255, 1)');
+      grd.addColorStop(0.25, `rgba(${ACCENT}, 0.85)`);
+      grd.addColorStop(1,    `rgba(${ACCENT}, 0)`);
+      ctx.beginPath();
+      ctx.arc(x, y, 9, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+
+      // bright white core
+      ctx.beginPath();
+      ctx.arc(x, y, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
       ctx.fill();
     }
 
