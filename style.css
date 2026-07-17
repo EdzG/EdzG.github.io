@@ -28,10 +28,11 @@
 html {
   scroll-behavior: smooth;
   scrollbar-color: var(--surface-2) var(--bg);
+  background-color: var(--bg);
 }
 
 body {
-  background-color: var(--bg);
+  background-color: transparent;
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -161,7 +162,6 @@ strong { color: var(--text); font-weight: 600; }
   min-height: 100svh;
   display: flex;
   align-items: center;
-  overflow: hidden;
 }
 
 /* dot-grid overlay for ML grid aesthetic */
@@ -190,11 +190,12 @@ strong { color: var(--text); font-weight: 600; }
 }
 
 #hero-canvas {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .hero-content {

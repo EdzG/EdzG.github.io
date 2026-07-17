@@ -73,18 +73,18 @@ revealEls.forEach(el => revealObserver.observe(el));
   const ctx = canvas.getContext('2d');
 
   const ACCENT     = '124, 106, 247';   // RGB of --accent
-  const COUNT      = 55;
-  const MAX_DIST   = 140;
-  const SPEED      = 0.28;
-  const NODE_R_MIN = 1;
-  const NODE_R_MAX = 2.2;
+  const COUNT      = 75;
+  const MAX_DIST   = 170;
+  const SPEED      = 0.3;
+  const NODE_R_MIN = 1.2;
+  const NODE_R_MAX = 2.8;
 
   let particles = [];
   let raf;
 
   function resize() {
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
   }
 
   function spawn() {
@@ -116,12 +116,12 @@ revealEls.forEach(el => revealObserver.observe(el));
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist > MAX_DIST) continue;
 
-        const alpha = (1 - dist / MAX_DIST) * 0.28;
+        const alpha = (1 - dist / MAX_DIST) * 0.5;
         ctx.beginPath();
         ctx.moveTo(particles[i].x, particles[i].y);
         ctx.lineTo(particles[j].x, particles[j].y);
         ctx.strokeStyle = `rgba(${ACCENT}, ${alpha})`;
-        ctx.lineWidth   = 0.75;
+        ctx.lineWidth   = 1;
         ctx.stroke();
       }
     }
@@ -130,7 +130,7 @@ revealEls.forEach(el => revealObserver.observe(el));
     for (const p of particles) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${ACCENT}, 0.55)`;
+      ctx.fillStyle = `rgba(${ACCENT}, 0.75)`;
       ctx.fill();
     }
 
