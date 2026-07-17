@@ -28,11 +28,10 @@
 html {
   scroll-behavior: smooth;
   scrollbar-color: var(--surface-2) var(--bg);
-  background-color: var(--bg);
 }
 
 body {
-  background-color: transparent;
+  background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -156,9 +155,14 @@ strong { color: var(--text); font-weight: 600; }
 .nav-toggle.open span:nth-child(2) { opacity: 0; }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+/* All sections sit above the fixed canvas */
+section, footer#contact {
+  position: relative;
+  z-index: 1;
+}
+
 /* ─── Hero ───────────────────────────────────────────────────── */
 #about {
-  position: relative;
   min-height: 100svh;
   display: flex;
   align-items: center;
@@ -170,13 +174,11 @@ strong { color: var(--text); font-weight: 600; }
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
 }
 
 .hero-content {
-  position: relative;
-  z-index: 1;
   padding-block: clamp(5rem, 10vw, 7rem);
   max-width: 660px;
 }
